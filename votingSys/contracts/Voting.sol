@@ -31,7 +31,16 @@ contract Voting{
     }
 
     function vote (uint candidateID) public {
+        // restricting voter who already casted vote
+        require(!voters[msg.sender]);
+
+        // require that vote is voted to valid candidate
+        require(candidateID > 0 && candidateID <= candidatesCount);
+
+        // Increase the candidate vote count
         candidates[candidateID].voteCount++;
+
+        // set the voter's voted status to true
         voters[msg.sender] = true;
     }
 }
